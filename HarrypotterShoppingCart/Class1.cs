@@ -15,7 +15,7 @@ namespace HarrypotterShoppingCart
 
             foreach (string book in input)
             {
-                books.Add(book,)
+                books.Add(book, input.Count(name => name == book));
             }
 
             return books;
