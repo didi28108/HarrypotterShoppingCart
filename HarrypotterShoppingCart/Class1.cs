@@ -15,10 +15,26 @@ namespace HarrypotterShoppingCart
 
             foreach (string book in input)
             {
-                books.Add(book, input.Count(name => name == book));
+                if (!books.ContainsKey(book))
+                {
+                    books.Add(book, input.Count(name => name == book));
+                }
+                else {
+                    books[book] = (int)books[book] + 1 ;
+                }
             }
-
             return books;
+        }
+        public List<int> SortOrder(Hashtable order)
+        {
+            List<int> sortedOrder = new List<int>();
+            foreach (string book in order)
+            {
+                sortedOrder.Add((int)order[book]);
+            }
+            sortedOrder.Sort();
+
+            return sortedOrder;
         }
         public int ProcessOrder(List<int> order)
         {
