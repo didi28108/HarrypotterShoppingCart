@@ -9,6 +9,6 @@ namespace HarrypotterShoppingCart
     public class Class1
     {
         //add comment
-    
+        //add 2nd comment
     }
 }
