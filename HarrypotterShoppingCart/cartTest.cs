@@ -18,8 +18,6 @@ namespace HarrypotterShoppingCart
         {
             var Cart = new Class1();
             List<int> TestCase = new List<int>() { 1, 1, 1, 1, 1 };
-            double actual = Cart.ProcessOrder(TestCase);
-            Assert.True(actual == (double)375);
         }
 
         [Ignore("complete")]
@@ -38,8 +36,8 @@ namespace HarrypotterShoppingCart
         {
             var Cart = new Class1();
             List<int> orders = new List<int> { 1, 1, 1, 1, 1 };
-           
-            double actual = Cart.CalcDiscount(orders); ;
+            int boundry = orders.Count();
+            double actual = Cart.CalcDiscount(boundry);
             double expected = 0.75;
             Assert.True(actual == expected);
 
@@ -50,21 +48,23 @@ namespace HarrypotterShoppingCart
         public void TestTotalPrice()
         {
             var Cart = new Class1();
-            List<int> orders = new List<int>{1,2,3,4,5};
+            List<int> orders = new List<int>{0,0,1,2,3};
             double actual = Cart.ProcessOrderWithFilter(orders);
-            double expected = 375;
+            double expected = 560;
             Assert.True(actual == expected);
         }
-
         [Test]
-        public void TestRemovedItem()
+        public void TestSubstraction()
         {
             var Cart = new Class1();
             List<int> orders = new List<int> { 1, 2, 3, 4, 5 };
-            List<int> expected = new List<int> {1, 3, 4, 5};
-            Cart.RemoveProcessedItem(ref orders, 2);
+            int processed = 2;
+            Cart.SubstractionFromOrder(ref orders, processed);
+            List<int> expected = new List<int>{0 , 0 , 1 ,2 ,3};
 
             Assert.True(orders == expected);
         }
+
+       
     }
 }
