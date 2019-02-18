@@ -24,60 +24,51 @@ namespace HarrypotterShoppingCart
             }
             return books;
         }
-        public List<int> SortOrder(Hashtable order)
-        {
-            List<int> sortedOrder = new List<int>();
-            foreach (string book in order)
-            {
-                sortedOrder.Add((int)order[book]);
-            }
-            sortedOrder.Sort();
 
-            return sortedOrder;
-        }
-        public double ProcessOrder(List<int> order)
-        {
-            int singleprice = 100;
-            List<double> discount = new List<double> { 0.75, 0.8, 0.9, 0.95, 1 };
-            double total = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                total += (order[i + 1] - order[i]) * (5-i) * (double)singleprice * discount[i];
-            }
-            return total;
-        }
+
 
         public double ProcessOrderWithFilter(List<int> order)
         { 
             double total = 0;
-            while (order.Count != 0)
+            int boundry = order.Count();
+            while (boundry > 1)
             {
                 order.RemoveAll(item => item == 0);
-                double discountValue = CalcDiscount(order);
+                boundry = order.Count();
+                double discountValue = CalcDiscount(boundry);
                 int itemQuantity = order.Min();
-                double price = CalcPrice(rtemQuantity, discountValue);
+                SubstractionFromOrder(ref order , itemQuantity);
+                double price = CalcPrice(ref order, itemQuantity, discountValue);
                 total += price;
-                RemoveProcessedItem(ref order, itemQuantity);
             }
-            
-
-           
             return total;
         }
 
-        public double CalcPrice(int quantity, double discount)
+        public double CalcPrice(ref List<int> order ,int quantity, double discount)
         {
-            return quantity * 100 * discount;
+            return order.Count()* quantity * 100 * discount;
+            //add 
         }
 
-        public void RemoveProcessedItem(ref List<int> order , int Quantity)
+        public void SubstractionFromOrder(ref List<int> orders , int processedItem)
         {
-            order.RemoveAll(item => item == Quantity);
+            for (int i = 0; i < orders.Count; i++)
+            {
+                if (orders[i] > processedItem)
+                {
+                    orders[i] -= processedItem;
+                }
+                else
+                {
+                    orders[i] = 0;
+                }
+            }
         }
-        public double CalcDiscount(List<int> order)
+        
+        public double CalcDiscount(int boundry)
         {
             List<double> discount = new List<double>{1, 0.95, 0.9, 0.8, 0.75};
-            return discount[order.Count()-1];
+            return discount[boundry-1];
         }
 
         
